@@ -3,7 +3,7 @@ import { createContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Brick from './components/brick';
 
-var gameContext = createContext()
+var gameContext = createContext();
 
 export default function App() {
   var context = {
@@ -31,6 +31,8 @@ export default function App() {
   for (var i in context.bricks){
     brickOutput.push(<Brick key={'brick ' + i} id={i} />)
   };
+
+  console.warn('Game rendered!');
 
   return (
     <gameContext.Provider value={context}>
