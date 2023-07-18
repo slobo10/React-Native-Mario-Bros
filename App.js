@@ -1,14 +1,46 @@
 import { StatusBar } from 'expo-status-bar';
+import { createContext } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Brick from './components/brick';
+
+var gameContext = createContext()
 
 export default function App() {
+  var context = {
+    game: {
+      gridSize: 75,
+      height: 750,
+    },
+    bricks: [
+      {
+        posision: [0,0],
+      },
+      {
+        posision: [1,0],
+      },
+      {
+        posision: [2,0],
+      },
+      {
+        posision: [3,0],
+      },
+    ],
+  }
+
+  var brickOutput = [];
+  for (var i in context.bricks){
+    brickOutput.push(<Brick key={'brick ' + i} id={i} />)
+  };
+
   return (
-    <View style={styles.container}>
-      <svg style={styles.gameArea} width={1250} height={750}></svg>
-      <StatusBar style="auto" />
-    </View>
+    <gameContext.Provider value={context}>
+      <View style={styles.container}>
+        <svg style={styles.gameArea} width={1250} height={context.game.height}>{brickOutput}</svg>
+        <StatusBar style="auto" />
+      </View>
+    </gameContext.Provider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -19,5 +51,10 @@ const styles = StyleSheet.create({
   },
   gameArea: {
     backgroundColor: 'blue'
-  }
+  },
+  brick: {
+    fill: '#5c260f',
+  },
 });
+
+export {gameContext, styles};
