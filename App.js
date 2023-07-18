@@ -1,14 +1,59 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createContext } from 'react';
+import { StyleSheet, View } from 'react-native';
+import Brick from './components/brick';
+import Mario from './components/mario';
+
+var gameContext = createContext();
 
 export default function App() {
+  var context = {
+    game: {
+      gridSize: 75,
+      height: 750,
+    },
+    bricks: [
+      {
+        posision: [0,0],
+      },
+      {
+        posision: [1,0],
+      },
+      {
+        posision: [2,0],
+      },
+      {
+        posision: [3,0],
+      },
+      {
+        posision: [3,4],
+        type: 'question',
+      },
+    ],
+    mario: {
+      posision: [0,1],
+    }
+  }
+
+  var brickOutput = [];
+  for (var i in context.bricks){
+    brickOutput.push(<Brick key={'brick ' + i} id={i} />)
+  };
+
+  console.warn('Game rendered!');
+
   return (
-    <View style={styles.container}>
-      <Text>React-Native-Mario-Bros has not been made yet. Please check in later when I've got a chance to make it.</Text>
-      <StatusBar style="auto" />
-    </View>
+    <gameContext.Provider value={context}>
+      <View style={styles.container}>
+        <svg style={styles.gameArea} width={1250} height={context.game.height}>
+          {brickOutput}
+          <Mario />
+        </svg>
+        <StatusBar style="auto" />
+      </View>
+    </gameContext.Provider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -17,4 +62,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  gameArea: {
+    backgroundColor: 'blue'
+  },
 });
+
+export {gameContext, styles};
