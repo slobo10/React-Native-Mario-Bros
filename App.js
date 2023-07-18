@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { createContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Brick from './components/brick';
+import Mario from './components/mario';
 
 var gameContext = createContext();
 
@@ -29,6 +30,9 @@ export default function App() {
         type: 'question',
       },
     ],
+    mario: {
+      posision: [0,1],
+    }
   }
 
   var brickOutput = [];
@@ -41,7 +45,10 @@ export default function App() {
   return (
     <gameContext.Provider value={context}>
       <View style={styles.container}>
-        <svg style={styles.gameArea} width={1250} height={context.game.height}>{brickOutput}</svg>
+        <svg style={styles.gameArea} width={1250} height={context.game.height}>
+          {brickOutput}
+          <Mario />
+        </svg>
         <StatusBar style="auto" />
       </View>
     </gameContext.Provider>
