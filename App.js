@@ -24,6 +24,10 @@ export default function App() {
       {
         posision: [3,0],
       },
+      {
+        posision: [3,4],
+        type: 'question',
+      },
     ],
   }
 
@@ -53,9 +57,6 @@ const styles = StyleSheet.create({
   },
   gameArea: {
     backgroundColor: 'blue'
-  },
-  brick: {
-    fill: '#5c260f',
   },
 });
 
