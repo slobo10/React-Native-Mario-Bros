@@ -41,6 +41,9 @@ const Mario = () => {
                 x -= stats.current.speed / stats.current.updateRate;
             };
 
+            ySpeed.current -= stats.current.gravity;
+            y += ySpeed.current;
+            
             var stopperBlock = null;
             for (var i in bricks.current){
                 if (bricks.current[i].type == undefined && y <= bricks.current[i].posision[1] + bricks.current[i].dim[1] && y >= bricks.current[i].posision[1] - 1 && x > bricks.current[i].posision[0] - 1 && x < bricks.current[i].posision[0] + bricks.current[i].dim[0]) {
@@ -52,10 +55,10 @@ const Mario = () => {
                 canJump.current = true;
                 ySpeed.current = 0;
                 y = stopperBlock.posision[1] + 1;
-            } else {
-                ySpeed.current -= stats.current.gravity;
-                y += ySpeed.current;
-            };
+            } //else {
+            //    ySpeed.current -= stats.current.gravity;
+            //    y += ySpeed.current;
+            //};
 
             setY(y);
             setX(x);
