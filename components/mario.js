@@ -7,7 +7,8 @@ const Mario = () => {
         speed: useContext(gameContext).mario.speed,
         gravity: useContext(gameContext).game.gravity / useContext(gameContext).mario.updateRate,
     });
-    var bricks = useRef(useContext(gameContext).bricks)
+    var bricks = useRef(useContext(gameContext).bricks);
+    var canJump = useRef(false);
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
     var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
@@ -15,19 +16,24 @@ const Mario = () => {
 
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
-            if (e.key == "d"){
+            if (e.key == 'd'){
                 xSpeed.current = 1;
-            } else if (e.key == "a"){
+            } else if (e.key == 'a'){
                 xSpeed.current = -1;
+            } else if (e.key == ' ' && canJump.current) {
+                canJump.current = false;
+                ySpeed.current = 0.6;
+                y += 0.01;
+                setY(y);
             };
         });
         
         document.addEventListener('keyup', (e) => {
-            if (e.key == "d" || e.key == "a"){
+            if (e.key == 'd' || e.key == 'a'){
                 xSpeed.current = 0;
             };
         });
-        
+
         setInterval(() => {
             if (xSpeed.current == 1) {
                 x += stats.current.speed / stats.current.updateRate;
@@ -43,11 +49,12 @@ const Mario = () => {
             };
 
             if (stopperBlock != null){
+                canJump.current = true;
                 ySpeed.current = 0;
                 y = stopperBlock.posision[1] + 1;
             } else {
-                ySpeed.current += stats.current.gravity;
-                y -= ySpeed.current;
+                ySpeed.current -= stats.current.gravity;
+                y += ySpeed.current;
             };
 
             setY(y);
