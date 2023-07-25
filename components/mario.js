@@ -5,9 +5,9 @@ const Mario = () => {
     const stats = useRef({
         updateRate: useContext(gameContext).mario.updateRate,
         speed: useContext(gameContext).mario.speed,
+        gravity: useContext(gameContext).game.gravity / useContext(gameContext).mario.updateRate,
     });
-    //const updateRate = useRef(useContext(gameContext).mario.updateRate);
-    //const speed = useRef(useContext(gameContext).mario.speed);
+    var bricks = useRef(useContext(gameContext).bricks)
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
     var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
@@ -29,11 +29,27 @@ const Mario = () => {
         setInterval(() => {
             if (xSpeed.current == 1) {
                 x += stats.current.speed / stats.current.updateRate;
-                setX(x);
             } else if (xSpeed.current == -1){
                 x -= stats.current.speed / stats.current.updateRate;
-                setX(x);
             };
+
+            var stopperBlock = null;
+            for (var i in bricks.current){
+                if (bricks.current[i].type == undefined && y <= bricks.current[i].posision[1] + bricks.current[i].dim[1] && y >= bricks.current[i].posision[1] - 1 && x > bricks.current[i].posision[0] - 1 && x < bricks.current[i].posision[0] + bricks.current[i].dim[0]) {
+                    stopperBlock = bricks.current[i];
+                };
+            };
+
+            if (stopperBlock != null){
+                ySpeed.current = 0;
+                y = stopperBlock.posision[1] + 1;
+            } else {
+                ySpeed.current += stats.current.gravity;
+                y -= ySpeed.current;
+            };
+
+            setY(y);
+            setX(x);
         }, 1000 / stats.current.updateRate);
     }, []);
 
