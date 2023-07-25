@@ -32,6 +32,8 @@ export default function App() {
     ],
     mario: {
       posision: [0,1],
+      speed: 4,//Bricks per Second,
+      updateRate: 25,//Frames per Second
     }
   }
 
