@@ -7,7 +7,7 @@ import Mario from './components/mario';
 var gameContext = createContext();
 
 export default function App() {
-  var context = {
+  var gameContextValue = {
     game: {
       gridSize: 75,
       height: 750,
@@ -31,16 +31,16 @@ export default function App() {
   }
 
   var brickOutput = [];
-  for (var i in context.bricks){
+  for (var i in gameContextValue.bricks){
     brickOutput.push(<Brick key={'brick ' + i} id={i} />)
   };
 
   console.warn('Game rendered!');
 
   return (
-    <gameContext.Provider value={context}>
+    <gameContext.Provider value={gameContextValue}>
       <View style={styles.container}>
-        <svg style={styles.gameArea} width={1250} height={context.game.height}>
+        <svg style={styles.gameArea} width={1250} height={gameContextValue.game.height}>
           {brickOutput}
           <Mario />
         </svg>

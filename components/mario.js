@@ -17,15 +17,17 @@ const Mario = () => {
         document.addEventListener('keydown', (e) => {
             if (e.key == "d"){
                 xSpeed.current = 1;
-            }else if (e.key == "a"){
+            } else if (e.key == "a"){
                 xSpeed.current = -1;
             };
         });
+        
         document.addEventListener('keyup', (e) => {
             if (e.key == "d" || e.key == "a"){
                 xSpeed.current = 0;
             };
         });
+        
         setInterval(() => {
             if (xSpeed.current == 1) {
                 x += stats.current.speed / stats.current.updateRate;
