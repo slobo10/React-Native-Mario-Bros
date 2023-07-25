@@ -1,11 +1,62 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { gameContext } from "../App";
 
 const Mario = () => {
+    const stats = useRef({
+        updateRate: useContext(gameContext).mario.updateRate,
+        speed: useContext(gameContext).mario.speed,
+        gravity: useContext(gameContext).game.gravity / useContext(gameContext).mario.updateRate,
+    });
+    var bricks = useRef(useContext(gameContext).bricks)
+    var xSpeed = useRef(0);
+    var ySpeed = useRef(0);
+    var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
+    var [y, setY] = useState(useContext(gameContext).mario.posision[1]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', (e) => {
+            if (e.key == "d"){
+                xSpeed.current = 1;
+            }else if (e.key == "a"){
+                xSpeed.current = -1;
+            };
+        });
+        document.addEventListener('keyup', (e) => {
+            if (e.key == "d" || e.key == "a"){
+                xSpeed.current = 0;
+            };
+        });
+        setInterval(() => {
+            if (xSpeed.current == 1) {
+                x += stats.current.speed / stats.current.updateRate;
+            } else if (xSpeed.current == -1){
+                x -= stats.current.speed / stats.current.updateRate;
+            };
+
+            var stopperBlock = null;
+            for (var i in bricks.current){
+                if (bricks.current[i].type == undefined && y <= bricks.current[i].posision[1] + bricks.current[i].dim[1] && y >= bricks.current[i].posision[1] - 1 && x > bricks.current[i].posision[0] - 1 && x < bricks.current[i].posision[0] + bricks.current[i].dim[0]) {
+                    stopperBlock = bricks.current[i];
+                };
+            };
+
+            if (stopperBlock != null){
+                ySpeed.current = 0;
+                y = stopperBlock.posision[1] + 1;
+            } else {
+                ySpeed.current += stats.current.gravity;
+                y -= ySpeed.current;
+            };
+
+            setY(y);
+            setX(x);
+        }, 1000 / stats.current.updateRate);
+    }, []);
+
     console.warn('Mario rendered!');
 
     return(<>
-        <circle cx={(useContext(gameContext).mario.posision[0] + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (useContext(gameContext).mario.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="red"/>
+        <circle cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="red"/>
     </>);
 };
 

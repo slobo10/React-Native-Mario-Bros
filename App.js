@@ -11,19 +11,12 @@ export default function App() {
     game: {
       gridSize: 75,
       height: 750,
+      gravity: 1,//Pixels per Second squared
     },
     bricks: [
       {
         posision: [0,0],
-      },
-      {
-        posision: [1,0],
-      },
-      {
-        posision: [2,0],
-      },
-      {
-        posision: [3,0],
+        dim: [8,1]
       },
       {
         posision: [3,4],
@@ -31,7 +24,9 @@ export default function App() {
       },
     ],
     mario: {
-      posision: [0,1],
+      posision: [0,2],
+      speed: 4,//Bricks per Second,
+      updateRate: 25,//Frames per Second
     }
   }
 
