@@ -15,15 +15,7 @@ export default function App() {
     bricks: [
       {
         posision: [0,0],
-      },
-      {
-        posision: [1,0],
-      },
-      {
-        posision: [2,0],
-      },
-      {
-        posision: [3,0],
+        dim: [8,1]
       },
       {
         posision: [3,4],
