@@ -25,8 +25,7 @@ const Mario = () => {
                 setCharacter('Luigi');
             }else if (e.key == 'm') {
                 setCharacter('Mario');
-            } else if (e.key == ' ' && canJump.current) {
-                canJump.current = false;
+            } else if (e.key == ' ' && canJump.current == true) {
                 ySpeed.current = 1;
                 y += 0.01;
                 setY(y);
@@ -40,6 +39,8 @@ const Mario = () => {
         });
 
         setInterval(() => {
+            canJump.current = false;
+
             if (xSpeed.current == 1) {
                 x += stats.current.speed / stats.current.updateRate;
             } else if (xSpeed.current == -1){
