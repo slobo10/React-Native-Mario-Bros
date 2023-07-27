@@ -11,12 +11,13 @@ export default function App() {
     game: {
       gridSize: 75,
       height: 750,
-      gravity: 1,//Pixels per Second squared
+      gravity: 2,//Pixels per Second squared
     },
     bricks: [
       {
         posision: [0,0],
-        dim: [8,1]
+        dim: [8,1],
+        type: 'ground'
       },
       {
         posision: [3,4],
