@@ -15,12 +15,12 @@ export default function App() {
     },
     bricks: [
       {
-        posision: [0,0],
-        dim: [8,1],
+        posision: [0,1],
+        dim: [8,2],
         type: 'ground'
       },
       {
-        posision: [3,4],
+        posision: [3,5],
         type: 'question',
       },
     ],
