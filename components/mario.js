@@ -17,15 +17,15 @@ const Mario = () => {
 
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
-            if (e.key == 'd'){
+            if (e.key === 'd'){
                 xSpeed.current = 1;
-            } else if (e.key == 'a'){
+            } else if (e.key === 'a'){
                 xSpeed.current = -1;
-            } else if (e.key == 'l'){
+            } else if (e.key === 'l'){
                 setCharacter('Luigi');
-            }else if (e.key == 'm') {
+            }else if (e.key === 'm') {
                 setCharacter('Mario');
-            } else if (e.key == ' ' && canJump.current == true) {
+            } else if (e.key === ' ' && canJump.current === true) {
                 ySpeed.current = 1;
                 y += 0.01;
                 setY(y);
@@ -33,7 +33,7 @@ const Mario = () => {
         });
         
         document.addEventListener('keyup', (e) => {
-            if (e.key == 'd' || e.key == 'a'){
+            if (e.key === 'd' || e.key === 'a'){
                 xSpeed.current = 0;
             };
         });
@@ -41,9 +41,9 @@ const Mario = () => {
         setInterval(() => {
             canJump.current = false;
 
-            if (xSpeed.current == 1) {
+            if (xSpeed.current === 1) {
                 x += stats.current.speed / stats.current.updateRate;
-            } else if (xSpeed.current == -1){
+            } else if (xSpeed.current === -1){
                 x -= stats.current.speed / stats.current.updateRate;
             };
 
@@ -79,7 +79,7 @@ const Mario = () => {
     console.warn('Mario rendered!');
 
     return(<>
-        <circle cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={character == 'Mario' ? "red" : "green"}/>
+        <circle cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={character === 'Mario' ? "red" : "green"}/>
     </>);
 };
 
