@@ -7,40 +7,41 @@ import Mario from './components/mario';
 var gameContext = createContext();
 
 export default function App() {
-  var context = {
+  var gameContextValue = {
     game: {
       gridSize: 75,
       height: 750,
-      gravity: 1,//Pixels per Second squared
+      gravity: 2,//Pixels per Second squared
     },
     bricks: [
       {
-        posision: [0,0],
-        dim: [8,1]
+        posision: [0,1],
+        dim: [8,2],
+        type: 'ground'
       },
       {
-        posision: [3,4],
+        posision: [3,5],
         type: 'question',
       },
     ],
     mario: {
       posision: [0,2],
-      speed: 4,//Bricks per Second,
+      speed: 8,//Bricks per Second,
       updateRate: 25,//Frames per Second
     }
   }
 
   var brickOutput = [];
-  for (var i in context.bricks){
+  for (var i in gameContextValue.bricks){
     brickOutput.push(<Brick key={'brick ' + i} id={i} />)
   };
 
   console.warn('Game rendered!');
 
   return (
-    <gameContext.Provider value={context}>
+    <gameContext.Provider value={gameContextValue}>
       <View style={styles.container}>
-        <svg style={styles.gameArea} width={1250} height={context.game.height}>
+        <svg style={styles.gameArea} width={1250} height={gameContextValue.game.height}>
           {brickOutput}
           <Mario />
         </svg>
