@@ -50,7 +50,7 @@ const Mario = () => {
             y += ySpeed.current;
 
             for (var i in bricks.current){
-                if (y <= bricks.current[i].posision[1] + 1 && y >= bricks.current[i].posision[1] + 1 + ySpeed.current && x > bricks.current[i].posision[0] - 1 && x < bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1)){
+                if (y >= bricks.current[i].posision[1] + 1 + ySpeed.current && y <= bricks.current[i].posision[1] + 1 && x > bricks.current[i].posision[0] - 1 && x < bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1)){
                     canJump.current = true;
                     ySpeed.current = 0;
                     y = bricks.current[i].posision[1] + 1;
@@ -61,8 +61,9 @@ const Mario = () => {
                     break;
                 };
             };
+
             for (var i in bricks.current){
-                if (x <= bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1) && x >= bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1) + xSpeed.current && y > bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) && y < bricks.current[i].posision[1] + 1){
+                if (x >= bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1) + xSpeed.current && x <= bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1) && y > bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) && y < bricks.current[i].posision[1] + 1){
                     x = bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1);
                 } else if (x >= bricks.current[i].posision[0] - 1 && x <= bricks.current[i].posision[0] + xSpeed.current && y > bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) && y < bricks.current[i].posision[1] + 1){
                     x = bricks.current[i].posision[0] - 1;
