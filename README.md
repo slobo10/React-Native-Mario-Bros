@@ -1,12 +1,13 @@
 # React-Native-Mario-Bros
 
-## A game just like Nintendo's Mario Brothers butmore "reactive"!
+## A game just like Nintendo's Mario Brothers but more "reactive"!
 
 The game isn't functional yet, so check in later.
 
 ## Installation
 
-You need node.js to be installed to rin this app. Once you cloned the repository, Use the command line to navigate to the repository location. Then run
+You need node.js to be installed on your computer to run this app. Once you cloned the repository, Use the command line to navigate to the repository location. Then run
+
 ```bash
 npm install
 ```
