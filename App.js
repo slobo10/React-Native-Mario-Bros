@@ -16,22 +16,13 @@ export default function App() {
     bricks: [
       {
         posision: [0,1],
-        dim: [17,2],
+        dim: [8,2],
         type: 'ground'
       },
       {
-        posision: [15,9],
-        dim: [2,10],
-        type: 'ground',
-      },
-      {
-        posision: [2,5],
+        posision: [3,5],
         type: 'question',
       },
-      {
-        posision: [5,5],
-        type: 'question',
-      }
     ],
     mario: {
       posision: [0,2],
