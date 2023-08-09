@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { createContext } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { createContext, useEffect } from 'react';
+import { StyleSheet, View, useAnimatedValue } from 'react-native';
 import Brick from './components/brick';
 import Mario from './components/mario';
 
@@ -29,7 +29,11 @@ export default function App() {
       speed: 8,//Bricks per Second,
       updateRate: 25,//Frames per Second
     }
-  }
+  };
+
+  useEffect(() => {
+    document.title = 'Mario bros'
+  }, []);
 
   var brickOutput = [];
   for (var i in gameContextValue.bricks){
