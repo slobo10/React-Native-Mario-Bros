@@ -23,8 +23,10 @@ const Mario = () => {
                 xSpeed.current = -1;
             } else if (e.key === 'l'){
                 setCharacter('Luigi');
+                alert('Luigi! ME!');
             }else if (e.key === 'm') {
                 setCharacter('Mario');
+                alert('It\'s a me! MARIO!');
             } else if (e.key === ' ' && canJump.current === true) {
                 ySpeed.current = 1;
                 y += 0.01;
@@ -64,10 +66,12 @@ const Mario = () => {
             };
 
             for (var i in bricks.current){
-                if (x >= bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1) + xSpeed.current && x <= bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1) && y > bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) && y < bricks.current[i].posision[1] + 1){
+                if (x >= bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1) + xSpeed.current * stats.current.speed / stats.current.updateRate && x <= bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1) && y > bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) && y < bricks.current[i].posision[1] + 1){
                     x = bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1);
-                } else if (x >= bricks.current[i].posision[0] - 1 && x <= bricks.current[i].posision[0] + xSpeed.current && y > bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) && y < bricks.current[i].posision[1] + 1){
+                    break;
+                } else if (x >= bricks.current[i].posision[0] - 1 && x <= bricks.current[i].posision[0] + xSpeed.current * stats.current.speed / stats.current.updateRate && y > bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) && y < bricks.current[i].posision[1] + 1){
                     x = bricks.current[i].posision[0] - 1;
+                    break;
                 };
             };
 
@@ -76,7 +80,7 @@ const Mario = () => {
         }, 1000 / stats.current.updateRate);
     }, []);
 
-    console.warn('Mario rendered!');
+    console.warn(character + ' rendered!');
 
     return(<>
         <circle cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={character === 'Mario' ? "red" : "green"}/>
