@@ -61,6 +61,9 @@ const Mario = () => {
                 } else if (y >= bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) && y <= bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1) + ySpeed.current && x > bricks.current[i].posision[0] - 1 && x < bricks.current[i].posision[0] + (bricks.current[i].dim != undefined ? bricks.current[i].dim[0] : 1)){
                     ySpeed.current *= -1;
                     y = bricks.current[i].posision[1] - (bricks.current[i].dim != undefined ? bricks.current[i].dim[1] : 1);
+                    if (bricks.current[i].type === 'question'){
+                        bricks.current[i].type = 'empty';
+                    };
                     break;
                 };
             };
