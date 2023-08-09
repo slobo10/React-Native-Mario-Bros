@@ -8,7 +8,7 @@ const Brick = (props) => {
     useEffect(() => {
         if (brickType === 'question') {
             setInterval(() => {
-                if (currentBrick.current.type != brickType) {
+                if (currentBrick.current.type !== brickType) {
                     setBrickType(currentBrick.current.type);
                 };
             }, 50);
