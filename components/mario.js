@@ -20,12 +20,12 @@ const Mario = () => {
 
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
-            switch (e.key) {
-                case 'd': {
+            switch (e.key.toUpperCase()) {
+                case 'D': {
                     xSpeed.current = 1;
                     break;
                 };
-                case 'a': {
+                case 'A': {
                     xSpeed.current = -1;
                     break;
                 };
@@ -37,12 +37,12 @@ const Mario = () => {
                     };
                     break;
                 };
-                case 'l': {
+                case 'L': {
                     setCharacter('Luigi');
                     alert('Luigi! ME!');
                     break;
                 };
-                case 'm': {
+                case 'M': {
                     setCharacter('Mario');
                     alert('It\'s a me! MARIO!');
                     break;
@@ -51,7 +51,7 @@ const Mario = () => {
         });
         
         document.addEventListener('keyup', (e) => {
-            if (e.key === 'd' || e.key === 'a'){
+            if (e.key.toUpperCase() === 'D' || e.key.toUpperCase() === 'A'){
                 xSpeed.current = 0;
             };
         });
