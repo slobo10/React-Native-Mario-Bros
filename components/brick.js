@@ -6,7 +6,7 @@ const Brick = (props) => {
     var [brickType, setBrickType] = useState(currentBrick.current.type)
 
     useEffect(() => {
-        if (brickType === 'question') {
+        if (brickType === 'question' || 'hidden') {
             setInterval(() => {
                 if (currentBrick.current.type !== brickType) {
                     setBrickType(currentBrick.current.type);
@@ -17,21 +17,28 @@ const Brick = (props) => {
 
     console.warn('Brick ' + props.id + ' rendered!');
 
-    if (brickType === 'question'){
-        return(<>
-            <rect x={currentBrick.current.posision[0] * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="yellow" /><text fontSize={100} x={currentBrick.current.posision[0] * useContext(gameContext).game.gridSize + 15} y={useContext(gameContext).game.height - currentBrick.current.posision[1] * useContext(gameContext).game.gridSize - 2}>?</text>
-        </>);
-    } else if (brickType === 'ground'){
-        return(<>
-            <rect x={currentBrick.current.posision[0] * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize * currentBrick.current.dim[0]} height={useContext(gameContext).game.gridSize * currentBrick.current.dim[1]} fill="#5c260f" />
-        </>);
-    } else if (brickType === 'empty') {
-        return(<>
-            <rect x={currentBrick.current.posision[0] * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="#5c260f" />
-        </>)
+    switch (brickType) {
+        case 'ground': {
+            return(<>
+                <rect x={currentBrick.current.posision[0] * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize * currentBrick.current.dim[0]} height={useContext(gameContext).game.gridSize * currentBrick.current.dim[1]} fill="#5c260f" />
+            </>);
+        };
+        case 'question': {
+            return(<>
+                <rect x={currentBrick.current.posision[0] * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="yellow" /><text fontSize={100} x={currentBrick.current.posision[0] * useContext(gameContext).game.gridSize + 15} y={useContext(gameContext).game.height - currentBrick.current.posision[1] * useContext(gameContext).game.gridSize - 2}>?</text>
+            </>);
+        };
+        case 'hidden': {
+            return(<></>);
+        };
+        case 'empty': {
+            return(<>
+                <rect x={currentBrick.current.posision[0] * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="#5c260f" />
+            </>);
+        };
     };
     
-    console.error('Error at "Brick" component:\n\tAll bricks must have a type attribute. None were given at index ' + props.id + '.');
+    console.error('Error at "Brick" component:\n\tInvalid type attribute at brick ' + props.id + '.');
 };
 
 export default Brick;

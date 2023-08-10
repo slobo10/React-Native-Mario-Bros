@@ -8,30 +8,45 @@ const Mario = () => {
         speed: useContext(gameContext).mario.speed,
         gravity: useContext(gameContext).game.gravity / useContext(gameContext).mario.updateRate,
     });
-    var bricks = useRef(useContext(gameContext).bricks);
-    var canJump = useRef(false);
+
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
-    var [character, setCharacter] = useState('Mario');
+    var canJump = useRef(false);
+    var bricks = useRef(useContext(gameContext).bricks);
+
     var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
     var [y, setY] = useState(useContext(gameContext).mario.posision[1]);
+    var [character, setCharacter] = useState('Mario');
 
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'd'){
-                xSpeed.current = 1;
-            } else if (e.key === 'a'){
-                xSpeed.current = -1;
-            } else if (e.key === 'l'){
-                setCharacter('Luigi');
-                alert('Luigi! ME!');
-            }else if (e.key === 'm') {
-                setCharacter('Mario');
-                alert('It\'s a me! MARIO!');
-            } else if (e.key === ' ' && canJump.current === true) {
-                ySpeed.current = 1;
-                y += 0.01;
-                setY(y);
+            switch (e.key) {
+                case 'd': {
+                    xSpeed.current = 1;
+                    break;
+                };
+                case 'a': {
+                    xSpeed.current = -1;
+                    break;
+                };
+                case ' ': {
+                    if (canJump.current) {
+                        ySpeed.current = 1;
+                        y += 0.01;
+                        setY(y);
+                    };
+                    break;
+                };
+                case 'l': {
+                    setCharacter('Luigi');
+                    alert('Luigi! ME!');
+                    break;
+                };
+                case 'm': {
+                    setCharacter('Mario');
+                    alert('It\'s a me! MARIO!');
+                    break;
+                }
             };
         });
         
@@ -58,7 +73,7 @@ const Mario = () => {
                 ySpeed.current = 0;
             }, (brick) => {
                 ySpeed.current *= -1;
-                if (brick.type === 'question'){
+                if (brick.type === 'question' || brick.type === 'hidden'){
                     brick.type = 'empty';
                 };
             }, () => {}, () => {});
