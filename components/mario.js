@@ -12,7 +12,8 @@ const Mario = () => {
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
     var canJump = useRef(false);
-    var bricks = useRef(useContext(gameContext).bricks);
+    var bricks = useRef(useContext(gameContext).level.bricks);
+    var powerups = useRef(useContext(gameContext).level.powerups);
 
     var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
     var [y, setY] = useState(useContext(gameContext).mario.posision[1]);
@@ -39,11 +40,13 @@ const Mario = () => {
                 };
                 case 'L': {
                     setCharacter('Luigi');
+                    document.title = 'Luigi bros';
                     alert('Luigi! ME!');
                     break;
                 };
                 case 'M': {
                     setCharacter('Mario');
+                    document.title = 'Mario bros';
                     alert('It\'s a me! MARIO!');
                     break;
                 }
@@ -74,6 +77,10 @@ const Mario = () => {
             }, (brick) => {
                 ySpeed.current *= -1;
                 if (brick.type === 'question' || brick.type === 'hidden'){
+                    powerups.current.push({
+                        posision: [brick.posision[0], brick.posision[1] + 1],
+                        type: brick.content,
+                    });
                     brick.type = 'empty';
                 };
             }, () => {}, () => {});

@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { gameContext } from "../App";
 
 const Brick = (props) => {
-    var currentBrick = useRef(useContext(gameContext).bricks[props.id])
+    var currentBrick = useRef(useContext(gameContext).level.bricks[props.id])
     var [brickType, setBrickType] = useState(currentBrick.current.type)
 
     useEffect(() => {

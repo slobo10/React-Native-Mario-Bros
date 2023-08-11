@@ -3,6 +3,7 @@ import { createContext, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Brick from './components/brick';
 import Mario from './components/mario';
+import Powerups from './components/powerUps';
 
 var gameContext = createContext();
 
@@ -13,21 +14,26 @@ export default function App() {
       height: 750,
       gravity: 2,//Bricks per Second squared
     },
-    bricks: [
-      {
-        posision: [0,1],
-        dim: [8,2],
-        type: 'ground',
-      },
-      {
-        posision: [3,5],
-        type: 'question',
-      },
-      {
-        posision: [3,9],
-        type: 'hidden',
-      }
-    ],
+    level: {
+      bricks: [
+        {
+          posision: [0,1],
+          dim: [8,2],
+          type: 'ground',
+        },
+        {
+          posision: [3,5],
+          type: 'question',
+          content: 'mushroom',
+        },
+        {
+          posision: [3,9],
+          type: 'hidden',
+          content: '1-up',
+        }
+      ],
+      powerups: [],
+    },
     mario: {
       posision: [0,2],
       speed: 8,//Bricks per Second,
@@ -36,11 +42,11 @@ export default function App() {
   });
 
   useEffect(() => {
-    document.title = 'Mario bros'
+    document.title = 'Mario bros';
   }, []);
 
   var brickOutput = [];
-  for (var i in gameContextValue.current.bricks){
+  for (var i in gameContextValue.current.level.bricks){
     brickOutput.push(<Brick key={'brick ' + i} id={i} />)
   };
 
@@ -51,6 +57,7 @@ export default function App() {
       <View style={styles.container}>
         <svg style={styles.gameArea} width={1250} height={gameContextValue.current.game.height}>
           {brickOutput}
+          <Powerups />
           <Mario />
         </svg>
         <StatusBar style="auto" />
