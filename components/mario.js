@@ -8,40 +8,59 @@ const Mario = () => {
         speed: useContext(gameContext).mario.speed,
         gravity: useContext(gameContext).game.gravity / useContext(gameContext).mario.updateRate,
     });
-    var bricks = useRef(useContext(gameContext).bricks);
-    var canJump = useRef(false);
+
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
-    var [character, setCharacter] = useState('Mario');
+    var updateInterval = useRef(undefined);
+    var canJump = useRef(false);
+    var bricks = useRef(useContext(gameContext).level.bricks);
+    var powerups = useRef(useContext(gameContext).level.powerups);
+
     var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
     var [y, setY] = useState(useContext(gameContext).mario.posision[1]);
+    var [character, setCharacter] = useState('Mario');
 
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'd'){
-                xSpeed.current = 1;
-            } else if (e.key === 'a'){
-                xSpeed.current = -1;
-            } else if (e.key === 'l'){
-                setCharacter('Luigi');
-                alert('Luigi! ME!');
-            }else if (e.key === 'm') {
-                setCharacter('Mario');
-                alert('It\'s a me! MARIO!');
-            } else if (e.key === ' ' && canJump.current === true) {
-                ySpeed.current = 1;
-                y += 0.01;
-                setY(y);
+            switch (e.key.toUpperCase()) {
+                case 'D': {
+                    xSpeed.current = 1;
+                    break;
+                };
+                case 'A': {
+                    xSpeed.current = -1;
+                    break;
+                };
+                case ' ': {
+                    if (canJump.current) {
+                        ySpeed.current = 1;
+                        y += 0.01;
+                        setY(y);
+                    };
+                    break;
+                };
+                case 'L': {
+                    setCharacter('Luigi');
+                    document.title = 'Luigi bros';
+                    alert('Luigi! ME!');
+                    break;
+                };
+                case 'M': {
+                    setCharacter('Mario');
+                    document.title = 'Mario bros';
+                    alert('It\'s a me! MARIO!');
+                    break;
+                }
             };
         });
         
         document.addEventListener('keyup', (e) => {
-            if (e.key === 'd' || e.key === 'a'){
+            if (e.key.toUpperCase() === 'D' || e.key.toUpperCase() === 'A'){
                 xSpeed.current = 0;
             };
         });
 
-        setInterval(() => {
+        updateInterval.current = setInterval(() => {
             canJump.current = false;
 
             if (xSpeed.current === 1) {
@@ -58,10 +77,18 @@ const Mario = () => {
                 ySpeed.current = 0;
             }, (brick) => {
                 ySpeed.current *= -1;
-                if (brick.type === 'question'){
+                if (brick.type === 'question' || brick.type === 'hidden'){
+                    powerups.current.push({
+                        posision: [brick.posision[0], brick.posision[1] + 1],
+                        type: brick.content,
+                    });
                     brick.type = 'empty';
                 };
             }, () => {}, () => {});
+
+            if (y < -1) {
+                clearInterval(updateInterval.current);
+            };
 
             setY(y);
             setX(x);
