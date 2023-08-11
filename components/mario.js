@@ -11,6 +11,7 @@ const Mario = () => {
 
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
+    var updateInterval = useRef(undefined);
     var canJump = useRef(false);
     var bricks = useRef(useContext(gameContext).level.bricks);
     var powerups = useRef(useContext(gameContext).level.powerups);
@@ -59,7 +60,7 @@ const Mario = () => {
             };
         });
 
-        setInterval(() => {
+        updateInterval.current = setInterval(() => {
             canJump.current = false;
 
             if (xSpeed.current === 1) {
@@ -84,6 +85,10 @@ const Mario = () => {
                     brick.type = 'empty';
                 };
             }, () => {}, () => {});
+
+            if (y < -1) {
+                clearInterval(updateInterval.current);
+            };
 
             setY(y);
             setX(x);
