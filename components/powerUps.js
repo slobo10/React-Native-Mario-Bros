@@ -8,7 +8,8 @@ const Powerups = () => {
     useEffect(() => {
         setInterval(() => {
             if (powerups.current.length != totalPowerups){
-                setTotalPowerups(powerups.current.length);
+                totalPowerups = powerups.current.length;
+                setTotalPowerups(totalPowerups);
             };
         }, 50);
     }, []);

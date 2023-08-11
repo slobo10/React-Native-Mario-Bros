@@ -9,7 +9,8 @@ const Brick = (props) => {
         if (brickType === 'question' || 'hidden') {
             setInterval(() => {
                 if (currentBrick.current.type !== brickType) {
-                    setBrickType(currentBrick.current.type);
+                    brickType = currentBrick.current.type;
+                    setBrickType(brickType);
                 };
             }, 50);
         };
