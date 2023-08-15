@@ -23,35 +23,37 @@ const Mario = () => {
 
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
-            switch (e.key.toUpperCase()) {
-                case 'D': {
-                    xSpeed.current = 1;
-                    break;
-                };
-                case 'A': {
-                    xSpeed.current = -1;
-                    break;
-                };
-                case ' ': {
-                    if (canJump.current) {
-                        ySpeed.current = 1;
-                        y += 0.01;
-                        setY(y);
+            if (!(e.repeat || e.ctrlKey || e.altKey)){
+                switch (e.key.toUpperCase()) {
+                    case 'D': {
+                        xSpeed.current = 1;
+                        break;
                     };
-                    break;
+                    case 'A': {
+                        xSpeed.current = -1;
+                        break;
+                    };
+                    case ' ': {
+                        if (canJump.current) {
+                            ySpeed.current = 1;
+                            y += 0.01;
+                            setY(y);
+                        };
+                        break;
+                    };
+                    case 'L': {
+                        setCharacter('Luigi');
+                        document.title = 'Luigi bros';
+                        alert('Luigi! ME!');
+                        break;
+                    };
+                    case 'M': {
+                        setCharacter('Mario');
+                        document.title = 'Mario bros';
+                        alert('It\'s a me! MARIO!');
+                        break;
+                    };
                 };
-                case 'L': {
-                    setCharacter('Luigi');
-                    document.title = 'Luigi bros';
-                    alert('Luigi! ME!');
-                    break;
-                };
-                case 'M': {
-                    setCharacter('Mario');
-                    document.title = 'Mario bros';
-                    alert('It\'s a me! MARIO!');
-                    break;
-                }
             };
         });
         
