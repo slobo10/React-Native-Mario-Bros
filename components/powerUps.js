@@ -19,18 +19,20 @@ const Powerups = () => {
         output.push(<Powerup key={'Powerup ' + i} id={i} />)
     };
 
+    console.warn('All powerups rendered!')
+
     return(<>
         {output}
     </>);
 };
 
 const Powerup = (props) => {
-    var currentPowerUp = useRef(useContext(gameContext).level.powerups[props.id]);
+    var currentPowerup = useContext(gameContext).level.powerups[props.id];
 
-    console.warn('Powerup ' + props.id + ' rendered!')
+    console.warn('Powerup ' + props.id + ' rendered!');
 
     return(<>
-        <circle cx={(currentPowerUp.current.posision[0] + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerUp.current.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={currentPowerUp.current.type === 'mushroom' ? 'red' : currentPowerUp.current.type === '1-up' ? 'green' : 'black'}/>
+        <circle cx={(currentPowerup.posision[0] + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={currentPowerup.type === 'mushroom' ? 'red' : currentPowerup.type === '1-up' ? 'green' : 'black'}/>
     </>)
 };
 

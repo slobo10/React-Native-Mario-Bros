@@ -18,6 +18,7 @@ const Mario = () => {
 
     var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
     var [y, setY] = useState(useContext(gameContext).mario.posision[1]);
+    var [powerupState, setPowerupstate] = useState(useContext(gameContext).mario.powerupState);
     var [character, setCharacter] = useState('Mario');
 
     useEffect(() => {
@@ -72,7 +73,7 @@ const Mario = () => {
             ySpeed.current -= stats.current.gravity;
             y += ySpeed.current;
 
-            [x,y] = checkForCollision(x, y, xSpeed.current * stats.current.speed / stats.current.updateRate, ySpeed.current, bricks.current, (brick) => {
+            [x,y] = checkForCollision(x, y, xSpeed.current * stats.current.speed / stats.current.updateRate, ySpeed.current, powerupState < 2 ? 1 : 2, bricks.current, (brick) => {
                 canJump.current = true;
                 ySpeed.current = 0;
             }, (brick) => {
@@ -86,7 +87,20 @@ const Mario = () => {
                 };
             }, () => {}, () => {});
 
-            if (y < -1) {
+            for (var i = 0; i < powerups.current.length; i++) {
+                if (x > powerups.current[i].posision[0] - 1 && x < powerups.current[i].posision[0] + 1 && y > powerups.current[i].posision[1] - 1 && y < powerups.current[i].posision[1] + 1){
+                    switch (powerups.current[i].type){
+                        case 'mushroom': {
+                            powerupState = 2;
+                            setPowerupstate(powerupState);
+                        };
+                    };
+                    powerups.current.splice(i,1);
+                    break;
+                };
+            };
+
+            if (y < (powerupState < 2 ? -1 : -2)) {
                 clearInterval(updateInterval.current);
             };
 
@@ -96,10 +110,18 @@ const Mario = () => {
     }, []);
 
     console.warn(character + ' rendered!');
-
-    return(<>
-        <circle cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={character === 'Mario' ? "red" : "green"}/>
-    </>);
+    switch (powerupState) {
+        case 1: {
+            return(<>
+                <circle cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={character === 'Mario' ? "red" : "green"}/>
+            </>);
+        };
+        case 2: {
+            return(<>
+                <ellipse cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 1) * useContext(gameContext).game.gridSize} rx={useContext(gameContext).game.gridSize / 2} ry={useContext(gameContext).game.gridSize} fill={character === 'Mario' ? "red" : "green"}/>
+            </>);
+        };
+    };
 };
 
 export default Mario;
