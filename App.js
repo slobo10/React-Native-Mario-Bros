@@ -26,16 +26,12 @@ export default function App() {
           type: 'question',
           content: 'mushroom',
         },
-        {
-          posision: [3,9],
-          type: 'hidden',
-          content: '1-up',
-        }
       ],
       powerups: [],
     },
     mario: {
       posision: [0,2],
+      powerupState: 1,
       speed: 8,//Bricks per Second,
       updateRate: 25,//Frames per Second
     }
