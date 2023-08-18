@@ -12,13 +12,15 @@ export default function App() {
     game: {
       gridSize: 75,
       height: 750,
+      width: 1250,
       gravity: 2,//Bricks per Second squared
+      scrollDistance: {current: 0},
     },
     level: {
       bricks: [
         {
           posision: [0,1],
-          dim: [8,2],
+          dim: [32,2],
           type: 'ground',
         },
         {
@@ -26,6 +28,16 @@ export default function App() {
           type: 'question',
           content: 'mushroom',
         },
+        {
+          posision: [31,5],
+          type: 'question',
+          content: 'mushroom',
+        },
+        {
+          posision: [16,5],
+          type: 'hidden',
+          content: '1-up',
+        }
       ],
       powerups: [],
     },
@@ -51,7 +63,7 @@ export default function App() {
   return (
     <gameContext.Provider value={gameContextValue.current}>
       <View style={styles.container}>
-        <svg style={styles.gameArea} width={1250} height={gameContextValue.current.game.height}>
+        <svg style={styles.gameArea} width={gameContextValue.current.game.width} height={gameContextValue.current.game.height}>
           {brickOutput}
           <Powerups />
           <Mario />

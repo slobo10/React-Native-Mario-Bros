@@ -6,11 +6,14 @@ const Mario = () => {
     const stats = useRef({
         updateRate: useContext(gameContext).mario.updateRate,
         speed: useContext(gameContext).mario.speed,
+        gridSize: useContext(gameContext).game.gridSize,
         gravity: useContext(gameContext).game.gravity / useContext(gameContext).mario.updateRate,
+        gameWidth: useContext(gameContext).game.width,
     });
 
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
+    var scrollDistanceRef = useRef(useContext(gameContext).game.scrollDistance);
     var updateInterval = useRef(undefined);
     var canJump = useRef(false);
     var bricks = useRef(useContext(gameContext).level.bricks);
@@ -18,6 +21,7 @@ const Mario = () => {
 
     var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
     var [y, setY] = useState(useContext(gameContext).mario.posision[1]);
+    var [scrollDistanceState, setScrollDistanceState] = useState(scrollDistanceRef.current.current);
     var [powerupState, setPowerupstate] = useState(useContext(gameContext).mario.powerupState);
     var [character, setCharacter] = useState('Mario');
 
@@ -53,6 +57,10 @@ const Mario = () => {
                         alert('It\'s a me! MARIO!');
                         break;
                     };
+                    case 'S': {
+                        scrollDistanceState ++;
+                        setScrollDistanceState(scrollDistanceState)
+                    };
                 };
             };
         });
@@ -74,6 +82,10 @@ const Mario = () => {
 
             ySpeed.current -= stats.current.gravity;
             y += ySpeed.current;
+
+            if (x < scrollDistanceState){
+                x = scrollDistanceState;
+            };
 
             [x,y] = checkForCollision(x, y, xSpeed.current * stats.current.speed / stats.current.updateRate, ySpeed.current, powerupState < 2 ? 1 : 2, bricks.current, (brick) => {
                 canJump.current = true;
@@ -102,25 +114,34 @@ const Mario = () => {
                 };
             };
 
+            if (x >= stats.current.gameWidth / stats.current.gridSize * 3 / 4 + scrollDistanceState) {
+                scrollDistanceState = x - stats.current.gameWidth / stats.current.gridSize * 3 / 4;
+            };
+
             if (y < (powerupState < 2 ? -1 : -2)) {
                 clearInterval(updateInterval.current);
             };
 
+            setScrollDistanceState(scrollDistanceState);
             setY(y);
             setX(x);
         }, 1000 / stats.current.updateRate);
     }, []);
 
+    useEffect(() => {
+        scrollDistanceRef.current.current = scrollDistanceState;
+    }, [scrollDistanceState]);
+
     console.warn(character + ' rendered!');
     switch (powerupState) {
         case 1: {
             return(<>
-                <circle cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={character === 'Mario' ? "red" : "green"}/>
+                <circle cx={(x - scrollDistanceState + 0.5) * stats.current.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * stats.current.gridSize} r={stats.current.gridSize / 2} fill={character === 'Mario' ? "red" : "green"}/>
             </>);
         };
         case 2: {
             return(<>
-                <ellipse cx={(x + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (y + 1) * useContext(gameContext).game.gridSize} rx={useContext(gameContext).game.gridSize / 2} ry={useContext(gameContext).game.gridSize} fill={character === 'Mario' ? "red" : "green"}/>
+                <ellipse cx={(x - scrollDistanceState + 0.5) * stats.current.gridSize} cy={useContext(gameContext).game.height - (y + 1) * stats.current.gridSize} rx={stats.current.gridSize / 2} ry={stats.current.gridSize} fill={character === 'Mario' ? "red" : "green"}/>
             </>);
         };
     };
