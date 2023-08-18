@@ -29,6 +29,11 @@ export default function App() {
           content: 'mushroom',
         },
         {
+          posision: [31,5],
+          type: 'question',
+          content: 'mushroom',
+        },
+        {
           posision: [16,5],
           type: 'hidden',
           content: '1-up',
