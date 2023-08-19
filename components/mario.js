@@ -57,10 +57,6 @@ const Mario = () => {
                         alert('It\'s a me! MARIO!');
                         break;
                     };
-                    case 'S': {
-                        scrollDistanceState ++;
-                        setScrollDistanceState(scrollDistanceState)
-                    };
                 };
             };
         });
@@ -92,12 +88,25 @@ const Mario = () => {
                 ySpeed.current = 0;
             }, (brick) => {
                 ySpeed.current *= -1;
-                if (brick.type === 'question' || brick.type === 'hidden'){
+
+                if (brick.content != undefined) {
                     powerups.current.push({
                         posision: [brick.posision[0], brick.posision[1] + 1],
                         type: brick.content,
                     });
+                    brick.content = undefined;
                     brick.type = 'empty';
+                } else {
+                    switch (brick.type) {
+                        case 'question': {
+                            brick.type = 'empty';
+                            break;
+                        };
+                        case 'brick': {
+                            brick.type = undefined;
+                            break;
+                        };
+                    };
                 };
             }, () => {}, () => {});
 
