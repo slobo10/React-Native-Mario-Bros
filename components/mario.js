@@ -141,7 +141,6 @@ const Mario = () => {
         scrollDistanceRef.current.current = scrollDistanceState;
     }, [scrollDistanceState]);
 
-    console.warn(character + ' rendered!');
     switch (powerupState) {
         case 1: {
             return(<>

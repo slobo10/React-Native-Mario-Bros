@@ -25,8 +25,6 @@ const Brick = (props) => {
         })
     }, []);
 
-    console.warn('Brick ' + props.id + ' rendered!');
-
     switch (brickType) {
         case 'ground': {
             return(<>

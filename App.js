@@ -72,8 +72,6 @@ export default function App() {
     brickOutput.push(<Brick key={'brick ' + i} id={i} />)
   };
 
-  console.warn('Game rendered!');
-
   return (
     <gameContext.Provider value={gameContextValue.current}>
       <View style={styles.container}>
