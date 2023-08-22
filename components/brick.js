@@ -25,13 +25,16 @@ const Brick = (props) => {
         })
     }, []);
 
-    console.warn('Brick ' + props.id + ' rendered!');
-
     switch (brickType) {
         case 'ground': {
             return(<>
                 <rect x={(currentBrick.current.posision[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize * currentBrick.current.dim[0]} height={useContext(gameContext).game.gridSize * currentBrick.current.dim[1]} fill="#5c260f" />
             </>);
+        };
+        case 'brick': {
+            return(<>
+                <rect x={(currentBrick.current.posision[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="#8a4a0c" />
+            </>)
         };
         case 'question': {
             return(<>
@@ -47,8 +50,7 @@ const Brick = (props) => {
             </>);
         };
     };
-    
-    console.error('Error at "Brick" component:\n\tInvalid type attribute at brick ' + props.id + '.');
+    return(<></>);
 };
 
 export default Brick;

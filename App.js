@@ -24,20 +24,34 @@ export default function App() {
           type: 'ground',
         },
         {
-          posision: [3,5],
+          posision: [7,5],
+          type: 'question',
+        },
+        {
+          posision: [10,5],
           type: 'question',
           content: 'mushroom',
         },
         {
-          posision: [31,5],
-          type: 'question',
-          content: 'mushroom',
+          posision: [11,5],
+          type: 'brick',
         },
         {
-          posision: [16,5],
-          type: 'hidden',
-          content: '1-up',
-        }
+          posision: [12,5],
+          type: 'question',
+        },
+        {
+          posision: [12,9],
+          type: 'question',
+        },
+        {
+          posision: [13,5],
+          type: 'brick',
+        },
+        {
+          posision: [14,5],
+          type: 'question',
+        },
       ],
       powerups: [],
     },
@@ -57,8 +71,6 @@ export default function App() {
   for (var i in gameContextValue.current.level.bricks){
     brickOutput.push(<Brick key={'brick ' + i} id={i} />)
   };
-
-  console.warn('Game rendered!');
 
   return (
     <gameContext.Provider value={gameContextValue.current}>
