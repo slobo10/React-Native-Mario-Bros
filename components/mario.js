@@ -25,6 +25,8 @@ const Mario = () => {
     var [powerupState, setPowerupstate] = useState(useContext(gameContext).mario.powerupState);
     var [character, setCharacter] = useState('Mario');
 
+    var height = powerupState < 2 ? 1 : 2;
+
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
             if (!(e.repeat || e.ctrlKey || e.altKey)){
@@ -140,19 +142,10 @@ const Mario = () => {
     useEffect(() => {
         scrollDistanceRef.current.current = scrollDistanceState;
     }, [scrollDistanceState]);
-
-    switch (powerupState) {
-        case 1: {
-            return(<>
-                <circle cx={(x - scrollDistanceState + 0.5) * stats.current.gridSize} cy={useContext(gameContext).game.height - (y + 0.5) * stats.current.gridSize} r={stats.current.gridSize / 2} fill={character === 'Mario' ? "red" : "green"}/>
-            </>);
-        };
-        case 2: {
-            return(<>
-                <ellipse cx={(x - scrollDistanceState + 0.5) * stats.current.gridSize} cy={useContext(gameContext).game.height - (y + 1) * stats.current.gridSize} rx={stats.current.gridSize / 2} ry={stats.current.gridSize} fill={character === 'Mario' ? "red" : "green"}/>
-            </>);
-        };
-    };
+    
+    return(<>
+        <ellipse cx={(x - scrollDistanceState + 0.5) * stats.current.gridSize} cy={useContext(gameContext).game.height - (y + height / 2) * stats.current.gridSize} rx={stats.current.gridSize / 2} ry={stats.current.gridSize * height / 2} fill={character === 'Mario' ? "red" : "green"}/>
+    </>);
 };
 
 export default Mario;
