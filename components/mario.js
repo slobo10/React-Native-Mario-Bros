@@ -118,8 +118,7 @@ const Mario = () => {
                 if (x > powerups.current[i].posision[0] - 1 && x < powerups.current[i].posision[0] + 1 && y > powerups.current[i].posision[1] - height && y < powerups.current[i].posision[1] + 1){
                     switch (powerups.current[i].type){
                         case 'mushroom': {
-                            powerupState = 2;
-                            setPowerupstate(powerupState);
+                            setPowerupstate(2);
                             break;
                         };
                         case 'coin': {

@@ -35,8 +35,7 @@ const Powerup = (props) => {
     useEffect(() => {
         setInterval(() => {
             if (scrollDistance.current.current != scrollDistanceState) {
-                scrollDistanceState = scrollDistance.current.current;
-                setScrollDistanceState(scrollDistanceState);
+                setScrollDistanceState(scrollDistance.current.current);
             };
         }, 50);
     });

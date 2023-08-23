@@ -56,7 +56,35 @@ export default function App() {
       ],
       powerups: [
         {
+          posision: [27,2],
+          type: 'coin',
+        },
+        {
+          posision: [27,4],
+          type: 'coin',
+        },
+        {
+          posision: [28,3],
+          type: 'coin',
+        },
+        {
+          posision: [29,2],
+          type: 'coin',
+        },
+        {
+          posision: [29,4],
+          type: 'coin',
+        },
+        {
+          posision: [30,3],
+          type: 'coin',
+        },
+        {
           posision: [31,2],
+          type: 'coin',
+        },
+        {
+          posision: [31,4],
           type: 'coin',
         },
       ],

@@ -11,8 +11,7 @@ const CoinAmountDisplay = () => {
     useEffect(() => {
         setInterval(() => {
             if (coinCountRef.current.current != coinCountState) {
-                coinCountState = coinCountRef.current.current;
-                setCoinCountState(coinCountState);
+                setCoinCountState(coinCountRef.current.current);
             };
         })
     })
