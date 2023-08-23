@@ -14,6 +14,7 @@ const Mario = () => {
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
     var scrollDistanceRef = useRef(useContext(gameContext).game.scrollDistance);
+    var coinCount = useRef(useContext(gameContext).mario.coinCount);
     var updateInterval = useRef(undefined);
     var canJump = useRef(false);
     var bricks = useRef(useContext(gameContext).level.bricks);
@@ -102,6 +103,7 @@ const Mario = () => {
                     switch (brick.type) {
                         case 'question': {
                             brick.type = 'empty';
+                            coinCount.current.current ++;
                             break;
                         };
                         case 'brick': {
@@ -113,11 +115,16 @@ const Mario = () => {
             }, () => {}, () => {});
 
             for (var i = 0; i < powerups.current.length; i++) {
-                if (x > powerups.current[i].posision[0] - 1 && x < powerups.current[i].posision[0] + 1 && y > powerups.current[i].posision[1] - 1 && y < powerups.current[i].posision[1] + 1){
+                if (x > powerups.current[i].posision[0] - 1 && x < powerups.current[i].posision[0] + 1 && y > powerups.current[i].posision[1] - height && y < powerups.current[i].posision[1] + 1){
                     switch (powerups.current[i].type){
                         case 'mushroom': {
                             powerupState = 2;
                             setPowerupstate(powerupState);
+                            break;
+                        };
+                        case 'coin': {
+                            coinCount.current.current ++;
+                            break;
                         };
                     };
                     powerups.current.splice(i,1);

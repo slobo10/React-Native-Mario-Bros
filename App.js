@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import Brick from './components/brick';
 import Mario from './components/mario';
 import Powerups from './components/powerUps';
+import CoinAmountDisplay from './components/coinAmountDisplay';
 
 var gameContext = createContext();
 
@@ -53,11 +54,17 @@ export default function App() {
           type: 'question',
         },
       ],
-      powerups: [],
+      powerups: [
+        {
+          posision: [31,2],
+          type: 'coin',
+        },
+      ],
     },
     mario: {
       posision: [0,2],
       powerupState: 1,
+      coinCount: {current: 0},
       speed: 8,//Bricks per Second,
       updateRate: 25,//Frames per Second
     }
@@ -79,6 +86,7 @@ export default function App() {
           {brickOutput}
           <Powerups />
           <Mario />
+          <CoinAmountDisplay />
         </svg>
         <StatusBar style="auto" />
       </View>
