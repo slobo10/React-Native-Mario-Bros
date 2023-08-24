@@ -12,15 +12,13 @@ const Brick = (props) => {
         if (brickType === 'question' || 'hidden') {
             setInterval(() => {
                 if (currentBrick.current.type !== brickType) {
-                    brickType = currentBrick.current.type;
-                    setBrickType(brickType);
+                    setBrickType(currentBrick.current.type);
                 };
             }, 50);
         };
         setInterval(() => {
             if (scrollDistanceRef.current.current != scrollDistanceState) {
-                scrollDistanceState = scrollDistanceRef.current.current;
-                setScrollDistanceState(scrollDistanceState);
+                setScrollDistanceState(scrollDistanceRef.current.current);
             };
         })
     }, []);

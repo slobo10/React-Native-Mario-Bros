@@ -35,15 +35,30 @@ const Powerup = (props) => {
     useEffect(() => {
         setInterval(() => {
             if (scrollDistance.current.current != scrollDistanceState) {
-                scrollDistanceState = scrollDistance.current.current;
-                setScrollDistanceState(scrollDistanceState);
+                setScrollDistanceState(scrollDistance.current.current);
             };
         }, 50);
     });
 
-    return(<>
-        <circle cx={(currentPowerup.posision[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill={currentPowerup.type === 'mushroom' ? 'red' : currentPowerup.type === '1-up' ? 'green' : 'black'}/>
-    </>)
+    if (currentPowerup != undefined){//TODO: Find better way to do this
+        switch(currentPowerup.type) {
+            case 'mushroom': {
+                return(<>
+                    <circle cx={(currentPowerup.posision[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="red"/>
+                </>);
+            };
+            case '1-up': {
+                return(<>
+                    <circle cx={(currentPowerup.posision[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="green"/>
+                </>);
+            };
+            case 'coin': {
+                return(<>
+                    <circle cx={(currentPowerup.posision[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="yellow"/>
+                </>);
+            }
+        };
+    };
 };
 
 export default Powerups;

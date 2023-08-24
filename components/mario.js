@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { gameContext } from "../App";
 import { checkForCollision } from "../lib/mathlib";
 
@@ -14,18 +14,19 @@ const Mario = () => {
     var xSpeed = useRef(0);
     var ySpeed = useRef(0);
     var scrollDistanceRef = useRef(useContext(gameContext).game.scrollDistance);
+    var coinCount = useRef(useContext(gameContext).mario.coinCount);
     var updateInterval = useRef(undefined);
     var canJump = useRef(false);
     var bricks = useRef(useContext(gameContext).level.bricks);
     var powerups = useRef(useContext(gameContext).level.powerups);
-
+    
     var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
     var [y, setY] = useState(useContext(gameContext).mario.posision[1]);
     var [scrollDistanceState, setScrollDistanceState] = useState(scrollDistanceRef.current.current);
     var [powerupState, setPowerupstate] = useState(useContext(gameContext).mario.powerupState);
     var [character, setCharacter] = useState('Mario');
-
-    var height = powerupState < 2 ? 1 : 2;
+    
+    var height = useRef(powerupState < 2 ? 1 : 2);
 
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
@@ -84,7 +85,7 @@ const Mario = () => {
             if (x < scrollDistanceState){
                 x = scrollDistanceState;
             };
-
+            
             [x,y] = checkForCollision(x, y, xSpeed.current * stats.current.speed / stats.current.updateRate, ySpeed.current, powerupState < 2 ? 1 : 2, bricks.current, (brick) => {
                 canJump.current = true;
                 ySpeed.current = 0;
@@ -102,6 +103,7 @@ const Mario = () => {
                     switch (brick.type) {
                         case 'question': {
                             brick.type = 'empty';
+                            coinCount.current.current ++;
                             break;
                         };
                         case 'brick': {
@@ -113,11 +115,16 @@ const Mario = () => {
             }, () => {}, () => {});
 
             for (var i = 0; i < powerups.current.length; i++) {
-                if (x > powerups.current[i].posision[0] - 1 && x < powerups.current[i].posision[0] + 1 && y > powerups.current[i].posision[1] - 1 && y < powerups.current[i].posision[1] + 1){
+                if (x > powerups.current[i].posision[0] - 1 && x < powerups.current[i].posision[0] + 1 && y > powerups.current[i].posision[1] - height.current && y < powerups.current[i].posision[1] + 1){
                     switch (powerups.current[i].type){
                         case 'mushroom': {
                             powerupState = 2;
                             setPowerupstate(powerupState);
+                            break;
+                        };
+                        case 'coin': {
+                            coinCount.current.current ++;
+                            break;
                         };
                     };
                     powerups.current.splice(i,1);
@@ -142,9 +149,13 @@ const Mario = () => {
     useEffect(() => {
         scrollDistanceRef.current.current = scrollDistanceState;
     }, [scrollDistanceState]);
+
+    useEffect(() => {
+        height.current = powerupState < 2 ? 1 : 2;
+    }, [powerupState]);
     
     return(<>
-        <ellipse cx={(x - scrollDistanceState + 0.5) * stats.current.gridSize} cy={useContext(gameContext).game.height - (y + height / 2) * stats.current.gridSize} rx={stats.current.gridSize / 2} ry={stats.current.gridSize * height / 2} fill={character === 'Mario' ? "red" : "green"}/>
+        <ellipse cx={(x - scrollDistanceState + 0.5) * stats.current.gridSize} cy={useContext(gameContext).game.height - (y + height.current / 2) * stats.current.gridSize} rx={stats.current.gridSize / 2} ry={stats.current.gridSize * height.current / 2} fill={character === 'Mario' ? "red" : "green"}/>
     </>);
 };
 
