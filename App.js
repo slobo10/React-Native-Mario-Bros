@@ -97,9 +97,19 @@ export default function App() {
       updateRate: 25,//Frames per Second
     }
   });
+  
+  var mouseTimeout = useRef();
 
   useEffect(() => {
     document.title = 'Mario bros';
+
+    document.addEventListener('mousemove', () => {
+      document.body.style.cursor = 'default';
+      clearTimeout(mouseTimeout.current);
+      mouseTimeout.current = setTimeout(() => {
+        document.body.style.cursor = 'none';
+      }, 3000);
+    });
   }, []);
 
   var brickOutput = [];
