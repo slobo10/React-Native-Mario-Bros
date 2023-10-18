@@ -20,10 +20,10 @@ const Mario = () => {
     var bricks = useRef(useContext(gameContext).level.bricks);
     var powerups = useRef(useContext(gameContext).level.powerups);
     
-    var [x, setX] = useState(useContext(gameContext).mario.posision[0]);
-    var [y, setY] = useState(useContext(gameContext).mario.posision[1]);
+    var [x, setX] = useState(useContext(gameContext).mario.position[0]);
+    var [y, setY] = useState(useContext(gameContext).mario.position[1]);
     var [scrollDistanceState, setScrollDistanceState] = useState(scrollDistanceRef.current.current);
-    var [powerupState, setPowerupstate] = useState(useContext(gameContext).mario.powerupState);
+    var [powerupState, setPowerupState] = useState(useContext(gameContext).mario.powerupState);
     var [character, setCharacter] = useState('Mario');
     
     var height = useRef(powerupState < 2 ? 1 : 2);
@@ -94,7 +94,7 @@ const Mario = () => {
 
                 if (brick.content != undefined) {
                     powerups.current.push({
-                        posision: [brick.posision[0], brick.posision[1] + 1],
+                        position: [brick.position[0], brick.position[1] + 1],
                         type: brick.content,
                     });
                     brick.content = undefined;
@@ -115,11 +115,11 @@ const Mario = () => {
             }, () => {}, () => {});
 
             for (var i = 0; i < powerups.current.length; i++) {
-                if (x > powerups.current[i].posision[0] - 1 && x < powerups.current[i].posision[0] + 1 && y > powerups.current[i].posision[1] - height.current && y < powerups.current[i].posision[1] + 1){
+                if (x > powerups.current[i].position[0] - 1 && x < powerups.current[i].position[0] + 1 && y > powerups.current[i].position[1] - height.current && y < powerups.current[i].position[1] + 1){
                     switch (powerups.current[i].type){
                         case 'mushroom': {
                             powerupState = 2;
-                            setPowerupstate(powerupState);
+                            setPowerupState(powerupState);
                             break;
                         };
                         case 'coin': {
