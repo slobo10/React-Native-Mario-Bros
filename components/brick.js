@@ -26,17 +26,17 @@ const Brick = (props) => {
     switch (brickType) {
         case 'ground': {
             return(<>
-                <rect x={(currentBrick.current.posision[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize * currentBrick.current.dim[0]} height={useContext(gameContext).game.gridSize * currentBrick.current.dim[1]} fill="#5c260f" />
+                <rect x={(currentBrick.current.position[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.position[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize * currentBrick.current.dim[0]} height={useContext(gameContext).game.gridSize * currentBrick.current.dim[1]} fill="#5c260f" />
             </>);
         };
         case 'brick': {
             return(<>
-                <rect x={(currentBrick.current.posision[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="#8a4a0c" />
+                <rect x={(currentBrick.current.position[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.position[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="#8a4a0c" />
             </>)
         };
         case 'question': {
             return(<>
-                <rect x={(currentBrick.current.posision[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="yellow" /><text fontSize={100} x={(currentBrick.current.posision[0] - scrollDistanceRef.current.current) * useContext(gameContext).game.gridSize + 15} y={useContext(gameContext).game.height - currentBrick.current.posision[1] * useContext(gameContext).game.gridSize - 2}>?</text>
+                <rect x={(currentBrick.current.position[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.position[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="yellow" /><text fontSize={100} x={(currentBrick.current.position[0] - scrollDistanceRef.current.current) * useContext(gameContext).game.gridSize + 15} y={useContext(gameContext).game.height - currentBrick.current.position[1] * useContext(gameContext).game.gridSize - 2}>?</text>
             </>);
         };
         case 'hidden': {
@@ -44,7 +44,7 @@ const Brick = (props) => {
         };
         case 'empty': {
             return(<>
-                <rect x={(currentBrick.current.posision[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.posision[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="#5c260f" />
+                <rect x={(currentBrick.current.position[0] - scrollDistanceState) * useContext(gameContext).game.gridSize} y={useContext(gameContext).game.height - (currentBrick.current.position[1] + 1) * useContext(gameContext).game.gridSize} width={useContext(gameContext).game.gridSize} height={useContext(gameContext).game.gridSize} fill="#5c260f" />
             </>);
         };
     };

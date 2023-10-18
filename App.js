@@ -20,86 +20,117 @@ export default function App() {
     level: {
       bricks: [
         {
-          posision: [0,1],
+          position: [0,1],
           dim: [32,2],
           type: 'ground',
         },
         {
-          posision: [7,5],
+          position: [7,5],
           type: 'question',
         },
         {
-          posision: [10,5],
+          position: [10,5],
           type: 'question',
           content: 'mushroom',
         },
         {
-          posision: [11,5],
+          position: [11,5],
           type: 'brick',
         },
         {
-          posision: [12,5],
+          position: [12,5],
           type: 'question',
         },
         {
-          posision: [12,9],
+          position: [12,9],
           type: 'question',
+          content: '1-up'
         },
         {
-          posision: [13,5],
+          position: [13,5],
           type: 'brick',
         },
         {
-          posision: [14,5],
+          position: [14,5],
           type: 'question',
         },
       ],
       powerups: [
         {
-          posision: [27,2],
+          position: [27,2],
           type: 'coin',
         },
         {
-          posision: [27,4],
+          position: [27,4],
           type: 'coin',
         },
         {
-          posision: [28,3],
+          position: [27,6],
           type: 'coin',
         },
         {
-          posision: [29,2],
+          position: [28,3],
           type: 'coin',
         },
         {
-          posision: [29,4],
+          position: [28,5],
           type: 'coin',
         },
         {
-          posision: [30,3],
+          position: [29,2],
           type: 'coin',
         },
         {
-          posision: [31,2],
+          position: [29,4],
           type: 'coin',
         },
         {
-          posision: [31,4],
+          position: [29,6],
+          type: 'coin',
+        },
+        {
+          position: [30,3],
+          type: 'coin',
+        },
+        {
+          position: [30,5],
+          type: 'coin',
+        },
+        {
+          position: [31,2],
+          type: 'coin',
+        },
+        {
+          position: [31,4],
+          type: 'coin',
+        },
+        {
+          position: [31,6],
           type: 'coin',
         },
       ],
     },
     mario: {
-      posision: [0,2],
+      position: [0,2],
       powerupState: 1,
       coinCount: {current: 0},
       speed: 8,//Bricks per Second,
       updateRate: 25,//Frames per Second
     }
   });
+  
+  var mouseTimeout = useRef();
 
   useEffect(() => {
     document.title = 'Mario bros';
+
+    document.addEventListener('mousemove', () => {
+      document.body.style.cursor = 'default';
+      clearTimeout(mouseTimeout.current);
+      mouseTimeout.current = setTimeout(() => {
+        document.body.style.cursor = 'none';
+      }, 3000);
+    });
   }, []);
 
   var brickOutput = [];

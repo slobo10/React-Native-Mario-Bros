@@ -44,17 +44,17 @@ const Powerup = (props) => {
         switch(currentPowerup.type) {
             case 'mushroom': {
                 return(<>
-                    <circle cx={(currentPowerup.posision[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="red"/>
+                    <circle cx={(currentPowerup.position[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.position[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="red"/>
                 </>);
             };
             case '1-up': {
                 return(<>
-                    <circle cx={(currentPowerup.posision[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="green"/>
+                    <circle cx={(currentPowerup.position[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.position[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="green"/>
                 </>);
             };
             case 'coin': {
                 return(<>
-                    <circle cx={(currentPowerup.posision[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.posision[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="yellow"/>
+                    <circle cx={(currentPowerup.position[0] - scrollDistanceState + 0.5) * useContext(gameContext).game.gridSize} cy={useContext(gameContext).game.height - (currentPowerup.position[1] + 0.5) * useContext(gameContext).game.gridSize} r={useContext(gameContext).game.gridSize / 2} fill="yellow"/>
                 </>);
             }
         };
