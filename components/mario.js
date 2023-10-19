@@ -6,6 +6,7 @@ const Mario = () => {
     const stats = useRef({
         updateRate: useContext(gameContext).mario.updateRate,
         speed: useContext(gameContext).mario.speed,
+        acceleration: useContext(gameContext).mario.acceleration,
         gridSize: useContext(gameContext).game.gridSize,
         gravity: useContext(gameContext).game.gravity / useContext(gameContext).mario.updateRate,
         gameWidth: useContext(gameContext).game.width,
@@ -19,6 +20,7 @@ const Mario = () => {
     var canJump = useRef(false);
     var bricks = useRef(useContext(gameContext).level.bricks);
     var powerups = useRef(useContext(gameContext).level.powerups);
+    var keysDown = useRef([false, false])
     
     var [x, setX] = useState(useContext(gameContext).mario.position[0]);
     var [y, setY] = useState(useContext(gameContext).mario.position[1]);
@@ -33,11 +35,11 @@ const Mario = () => {
             if (!(e.repeat || e.ctrlKey || e.altKey)){
                 switch (e.key.toUpperCase()) {
                     case 'D': {
-                        xSpeed.current = 1;
+                        keysDown.current[1] = true;
                         break;
                     };
                     case 'A': {
-                        xSpeed.current = -1;
+                        keysDown.current[0] = true;
                         break;
                     };
                     case ' ': {
@@ -65,25 +67,54 @@ const Mario = () => {
         });
         
         document.addEventListener('keyup', (e) => {
-            if (e.key.toUpperCase() === 'D' || e.key.toUpperCase() === 'A'){
-                xSpeed.current = 0;
+            if (e.key.toUpperCase() === 'D' || e.key.toUpperCase() === 'A') {
+                keysDown.current = [false, false];
             };
         });
 
         updateInterval.current = setInterval(() => {
             canJump.current = false;
 
-            if (xSpeed.current === 1) {
-                x += stats.current.speed / stats.current.updateRate;
-            } else if (xSpeed.current === -1){
-                x -= stats.current.speed / stats.current.updateRate;
+            if (keysDown.current[0]) {
+                if (xSpeed.current <= 0){
+                    if (xSpeed.current >= -1){
+                        xSpeed.current -= stats.current.acceleration;
+                    } else {
+                        xSpeed.current = -1;
+                    };
+                } else {
+                    xSpeed.current -= stats.current.acceleration * 2;
+                };
+            } else if (keysDown.current[1]) {
+                if (xSpeed.current >= 0){
+                    if (xSpeed.current <= 1){
+                        xSpeed.current += stats.current.acceleration;
+                    } else {
+                        xSpeed.current = 1;
+                    };
+                } else {
+                    xSpeed.current += stats.current.acceleration * 2;
+                };
+            } else if (!(keysDown.current[0] || keysDown.current[1])) {
+                if (xSpeed.current > 0){
+                    xSpeed.current -= stats.current.acceleration;
+                } else if (xSpeed.current < 0){
+                    xSpeed.current += stats.current.acceleration;
+                };
+
+                if ((xSpeed.current < stats.current.acceleration && xSpeed.current > 0) || (xSpeed.current > 0.1 && xSpeed.current < 0)){
+                    xSpeed.current = 0;
+                };
             };
+
+            x += xSpeed.current * stats.current.speed / stats.current.updateRate;
 
             ySpeed.current -= stats.current.gravity;
             y += ySpeed.current;
 
             if (x < scrollDistanceState){
                 x = scrollDistanceState;
+                xSpeed.current = 0;
             };
             
             [x,y] = checkForCollision(x, y, xSpeed.current * stats.current.speed / stats.current.updateRate, ySpeed.current, powerupState < 2 ? 1 : 2, bricks.current, (brick) => {
@@ -112,7 +143,11 @@ const Mario = () => {
                         };
                     };
                 };
-            }, () => {}, () => {});
+            }, () => {
+                xSpeed.current = 0;
+            }, () => {
+                xSpeed.current = 0;
+            });
 
             for (var i = 0; i < powerups.current.length; i++) {
                 if (x > powerups.current[i].position[0] - 1 && x < powerups.current[i].position[0] + 1 && y > powerups.current[i].position[1] - height.current && y < powerups.current[i].position[1] + 1){
