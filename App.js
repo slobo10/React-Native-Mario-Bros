@@ -114,7 +114,8 @@ export default function App() {
       position: [0,2],
       powerupState: 1,
       coinCount: {current: 0},
-      speed: 8,//Bricks per Second,
+      speed: 16,//Bricks per Second,
+      acceleration: 0.1,
       updateRate: 25,//Frames per Second
     }
   });
