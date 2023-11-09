@@ -2,23 +2,29 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { gameContext } from "../App";
 
 const CoinAmountDisplay = () => {
-    const fontSize = useRef(50);
-    
-    var coinCountRef = useRef(useContext(gameContext).mario.coinCount);
+  const fontSize = useRef(50);
 
-    var [coinCountState, setCoinCountState] = useState(coinCountRef.current.current);
+  var coinCountRef = useRef(useContext(gameContext).mario.coinCount);
 
-    useEffect(() => {
-        setInterval(() => {
-            if (coinCountRef.current.current != coinCountState) {
-                setCoinCountState(coinCountRef.current.current);
-            };
-        })
-    })
+  var [coinCountState, setCoinCountState] = useState(
+    coinCountRef.current.current
+  );
 
-    return(<>
-        <text y={fontSize.current} fontSize={fontSize.current} fill="white">Coins: {coinCountState}</text>
-    </>)
+  useEffect(() => {
+    setInterval(() => {
+      if (coinCountRef.current.current != coinCountState) {
+        setCoinCountState(coinCountRef.current.current);
+      }
+    });
+  });
+
+  return (
+    <>
+      <text y={fontSize.current} fontSize={fontSize.current} fill="white">
+        Coins: {coinCountState}
+      </text>
+    </>
+  );
 };
 
 export default CoinAmountDisplay;
