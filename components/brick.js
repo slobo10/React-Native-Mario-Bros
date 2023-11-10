@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { Rect, Text } from "react-native-svg";
 import { gameContext } from "../App";
 
 const Brick = (props) => {
@@ -29,7 +30,7 @@ const Brick = (props) => {
     case "ground": {
       return (
         <>
-          <rect
+          <Rect
             x={
               (currentBrick.current.position[0] - scrollDistanceState) *
               useContext(gameContext).game.gridSize
@@ -55,7 +56,7 @@ const Brick = (props) => {
     case "brick": {
       return (
         <>
-          <rect
+          <Rect
             x={
               (currentBrick.current.position[0] - scrollDistanceState) *
               useContext(gameContext).game.gridSize
@@ -75,7 +76,7 @@ const Brick = (props) => {
     case "question": {
       return (
         <>
-          <rect
+          <Rect
             x={
               (currentBrick.current.position[0] - scrollDistanceState) *
               useContext(gameContext).game.gridSize
@@ -89,7 +90,7 @@ const Brick = (props) => {
             height={useContext(gameContext).game.gridSize}
             fill="yellow"
           />
-          <text
+          <Text
             fontSize={100}
             x={
               (currentBrick.current.position[0] -
@@ -105,7 +106,7 @@ const Brick = (props) => {
             }
           >
             ?
-          </text>
+          </Text>
         </>
       );
     }
@@ -115,7 +116,7 @@ const Brick = (props) => {
     case "empty": {
       return (
         <>
-          <rect
+          <Rect
             x={
               (currentBrick.current.position[0] - scrollDistanceState) *
               useContext(gameContext).game.gridSize

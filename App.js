@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import Brick from "./components/brick";
 import Mario from "./components/mario";
 import Powerups from "./components/powerUps";
+import { Svg } from "react-native-svg";
 import CoinAmountDisplay from "./components/coinAmountDisplay";
 
 var gameContext = createContext();
@@ -142,7 +143,7 @@ export default function App() {
   return (
     <gameContext.Provider value={gameContextValue.current}>
       <View style={styles.container}>
-        <svg
+        <Svg
           style={styles.gameArea}
           width={gameContextValue.current.game.width}
           height={gameContextValue.current.game.height}
@@ -151,7 +152,7 @@ export default function App() {
           <Powerups />
           <Mario />
           <CoinAmountDisplay />
-        </svg>
+        </Svg>
         <StatusBar style="auto" />
       </View>
     </gameContext.Provider>

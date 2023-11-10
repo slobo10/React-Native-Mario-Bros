@@ -1,4 +1,5 @@
-import { useContext, useEffect, useReducer, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Ellipse } from "react-native-svg";
 import { gameContext } from "../App";
 import { checkForCollision } from "../lib/mathlib";
 
@@ -221,7 +222,7 @@ const Mario = () => {
 
   return (
     <>
-      <ellipse
+      <Ellipse
         cx={(x - scrollDistanceState + 0.5) * stats.current.gridSize}
         cy={
           useContext(gameContext).game.height -

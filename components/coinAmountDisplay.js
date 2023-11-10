@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { Text } from "react-native-svg";
 import { gameContext } from "../App";
 
 const CoinAmountDisplay = () => {
@@ -20,9 +21,9 @@ const CoinAmountDisplay = () => {
 
   return (
     <>
-      <text y={fontSize.current} fontSize={fontSize.current} fill="white">
+      <Text y={fontSize.current} fontSize={fontSize.current} fill="white">
         Coins: {coinCountState}
-      </text>
+      </Text>
     </>
   );
 };
